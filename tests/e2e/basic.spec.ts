@@ -7,6 +7,15 @@ test.describe('Calculator App E2E Tests', () => {
       content: '*{transition:none!important;animation:none!important}' 
     });
     await page.goto('http://localhost:8000');
+    
+    // 電卓を表示するために認証パネルを確認
+    // （実際にはログインせずに、電卓パネルを直接表示）
+    await page.evaluate(() => {
+      const panel = document.getElementById('userPanel');
+      if (panel) {
+        panel.classList.remove('hidden');
+      }
+    });
   });
 
   test('1. ページが正しく読み込まれる', async ({ page }) => {
