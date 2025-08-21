@@ -6,15 +6,15 @@
     "version": "0.35"
   },
   "app": {
-    "name": "Awesome Paint Studio",
-    "nameEn": "Awesome Paint Studio",
-    "description": "最高にかっこいい音響付きペイントスタジオ",
+    "name": "Calculator App",
+    "nameEn": "Calculator App",
+    "description": "シンプルな電卓アプリケーション",
     "version": "0.1",
     "author": "",
     "license": "MIT"
   },
   "database": {
-    "collection": "paintings",
+    "collection": "calculations",
     "subCollections": [],
     "structure": {
       "timestamp": "number",
@@ -31,7 +31,7 @@
     "warningColor": "#ffff00",
     "infoColor": "#00ffff",
     "buttons": {
-      "save": "🎨 作品保存",
+      "save": "🧮 計算保存",
       "delete": "🗑️ 削除",
       "edit": "✏️ 編集",
       "cancel": "❌ キャンセル",
@@ -39,10 +39,10 @@
       "logout": "ログアウト"
     },
     "labels": {
-      "brushSize": "ブラシサイズ",
-      "color": "カラー",
-      "title": "作品タイトル",
-      "effect": "エフェクト"
+      "expression": "計算式",
+      "result": "結果",
+      "history": "履歴",
+      "clear": "クリア"
     },
     "defaultValue": 10.0,
     "gridSize": 30,

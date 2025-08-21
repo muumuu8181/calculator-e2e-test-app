@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awesome Paint Studio v0.1</title>
+    <title>Calculator App v0.1</title>
     
     <!-- iPhoneホーム画面用の設定 -->
     <link rel="apple-touch-icon" href="icon-180.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="アプリ名">
+    <meta name="apple-mobile-web-app-title" content="Calculator App">
     
     <!-- Android/その他用 -->
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -212,8 +212,8 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">🎨 Awesome Paint Studio v0.1</h1>
-                <p class="app-subtitle">最高にかっこいい音響付きペイントスタジオ</p>
+                <h1 class="app-title">🧮 Calculator App v0.1</h1>
+                <p class="app-subtitle">シンプルな電卓アプリケーション</p>
             </div>
             <!-- 認証セクション -->
             <div class="auth-section" id="authSection">
@@ -229,61 +229,73 @@
             </div>
         </div>
         
-        <!-- パネル2: ペイントスタジオ（カスタマイズ領域） -->
+        <!-- パネル2: 電卓（カスタマイズ領域） -->
         <div class="section-panel panel-L hidden" id="userPanel">
             <span class="panel-number">[2-L]</span>
 
-            <!-- ペイントツール -->
-            <div class="paint-tools" id="paintTools">
-                <div class="tool-panel section-panel panel-M" data-grid="B3">
+            <!-- 電卓 -->
+            <div class="calculator-tools" id="calculatorTools">
+                <div class="calculator-panel section-panel panel-M" data-grid="B3">
                     <span class="panel-number">[2.1-M]</span>
-                    <h3 style="margin-top: 0; margin-bottom: 8px;">🎨 Awesome Paint Studio</h3>
+                    <h3 style="margin-top: 0; margin-bottom: 8px;">🧮 Calculator</h3>
                     
-                    <!-- ツール選択 -->
-                    <div class="brush-tools">
-                        <button type="button" class="tool-btn active" onclick="selectTool('brush')" data-tool="brush" style="background: #ff0080;">🖌️ ブラシ</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('pencil')" data-tool="pencil" style="background: #00ffff;">✏️ ペンシル</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('spray')" data-tool="spray" style="background: #ff8000;">🎨 スプレー</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('glow')" data-tool="glow" style="background: #ffff00;">✨ グロー</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('neon')" data-tool="neon" style="background: #80ff00;">💫 ネオン</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('particle')" data-tool="particle" style="background: #ff0040;">🌟 パーティクル</button>
+                    <!-- ディスプレイ -->
+                    <div class="calculator-display" style="margin-bottom: 15px;">
+                        <input type="text" id="display" readonly 
+                               style="width: 100%; padding: 15px; font-size: 24px; text-align: right; 
+                                      border: 2px solid #007bff; border-radius: 8px; background: #f8f9fa;">
                     </div>
                     
-                    <!-- コントロールパネル -->
-                    <div class="controls section-panel panel-S" data-grid="B6-D6">
-                        <span class="panel-number">[2.1.1-S]</span>
-                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                            <div>
-                                <label>🖌️ サイズ: <span id="brushSizeDisplay">10</span></label>
-                                <input type="range" id="brushSize" min="1" max="50" value="10" style="width: 100px;">
-                            </div>
-                            <div>
-                                <label>🎨 カラー:</label>
-                                <input type="color" id="colorPicker" value="#ff0080" style="width: 40px; height: 30px;">
-                            </div>
-                            <div>
-                                <label>💧 透明度: <span id="opacityDisplay">100%</span></label>
-                                <input type="range" id="opacity" min="0" max="100" value="100" style="width: 100px;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- キャンバス -->
-                <div class="canvas-container section-panel panel-M" data-grid="B8">
-                    <span class="panel-number">[2.2-M]</span>
-                    <div style="text-align: center; background: #000011; padding: 10px; border-radius: 10px;">
-                        <canvas id="paintCanvas" width="600" height="400" 
-                            style="border: 2px solid #ff0080; border-radius: 8px; background: #000022; cursor: crosshair;">
-                        </canvas>
+                    <!-- ボタン -->
+                    <div class="calculator-buttons" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                        <button onclick="clearDisplay()" data-testid="clear-btn" 
+                                style="background: #dc3545; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">C</button>
+                        <button onclick="appendToDisplay('/')" data-testid="divide-btn"
+                                style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">÷</button>
+                        <button onclick="appendToDisplay('*')" data-testid="multiply-btn"
+                                style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">×</button>
+                        <button onclick="deleteLast()" data-testid="delete-btn"
+                                style="background: #ffc107; color: black; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">⌫</button>
+                        
+                        <button onclick="appendToDisplay('7')" data-testid="number-7"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">7</button>
+                        <button onclick="appendToDisplay('8')" data-testid="number-8"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">8</button>
+                        <button onclick="appendToDisplay('9')" data-testid="number-9"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">9</button>
+                        <button onclick="appendToDisplay('-')" data-testid="subtract-btn"
+                                style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">-</button>
+                        
+                        <button onclick="appendToDisplay('4')" data-testid="number-4"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">4</button>
+                        <button onclick="appendToDisplay('5')" data-testid="number-5"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">5</button>
+                        <button onclick="appendToDisplay('6')" data-testid="number-6"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">6</button>
+                        <button onclick="appendToDisplay('+')" data-testid="add-btn"
+                                style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">+</button>
+                        
+                        <button onclick="appendToDisplay('1')" data-testid="number-1"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">1</button>
+                        <button onclick="appendToDisplay('2')" data-testid="number-2"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">2</button>
+                        <button onclick="appendToDisplay('3')" data-testid="number-3"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">3</button>
+                        <button onclick="calculate()" data-testid="equals-btn" 
+                                style="background: #007bff; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer; grid-row: span 2;">=</button>
+                        
+                        <button onclick="appendToDisplay('0')" data-testid="number-0"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer; grid-column: span 2;">0</button>
+                        <button onclick="appendToDisplay('.')" data-testid="decimal-btn"
+                                style="background: #6c757d; color: white; border: none; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer;">.</button>
                     </div>
                     
-                    <!-- アクションボタン -->
-                    <div style="text-align: center; margin-top: 10px;">
-                        <button onclick="clearCanvas()" style="background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🗑️ クリア</button>
-                        <button onclick="savePainting()" style="background: #00ff80; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🎨 作品保存</button>
-                        <button onclick="downloadPainting()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">💾 ダウンロード</button>
-                        <input type="text" id="paintingTitle" placeholder="作品タイトル" style="margin: 5px; padding: 8px; border-radius: 5px; border: 1px solid #ff0080;">
+                    <!-- 保存ボタン -->
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button onclick="saveCalculation()" data-testid="save-btn"
+                                style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin: 5px;">🧮 計算保存</button>
+                        <input type="text" id="calculationNote" placeholder="メモ" data-testid="note-input"
+                               style="margin: 5px; padding: 8px; border-radius: 5px; border: 1px solid #007bff;">
                     </div>
                 </div>
             </div>
@@ -1543,7 +1555,90 @@ ${document.getElementById('logArea').innerText}`;
             log('📐 === テスト終了 ===');
         };
         
-        log('🚀 アプリテンプレート v0.33 起動完了');
+        // 電卓機能
+        window.appendToDisplay = (value) => {
+            const display = document.getElementById('display');
+            if (display.value === '0' && value !== '.') {
+                display.value = value;
+            } else {
+                display.value += value;
+            }
+            log(`🧮 入力: ${value}, 現在の式: ${display.value}`);
+        };
+
+        window.clearDisplay = () => {
+            document.getElementById('display').value = '';
+            log('🧮 表示をクリアしました');
+        };
+
+        window.deleteLast = () => {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+            log(`🧮 最後の文字を削除: ${display.value}`);
+        };
+
+        window.calculate = () => {
+            const display = document.getElementById('display');
+            const expression = display.value;
+            
+            try {
+                // セキュリティのため、数字と基本演算子のみ許可
+                if (!/^[0-9+\-*/.() ]+$/.test(expression)) {
+                    throw new Error('不正な文字が含まれています');
+                }
+                
+                // evalの代わりにFunction constructorを使用（より安全）
+                const result = new Function('return ' + expression.replace(/×/g, '*').replace(/÷/g, '/'))();
+                
+                if (!isFinite(result)) {
+                    throw new Error('計算結果が無効です');
+                }
+                
+                display.value = result.toString();
+                log(`🧮 計算完了: ${expression} = ${result}`);
+            } catch (error) {
+                display.value = 'エラー';
+                log(`❌ 計算エラー: ${error.message}`);
+            }
+        };
+
+        window.saveCalculation = async () => {
+            if (!currentUser) {
+                log('❌ ログインが必要です');
+                return;
+            }
+            
+            const display = document.getElementById('display');
+            const note = document.getElementById('calculationNote');
+            
+            if (!display.value || display.value === 'エラー') {
+                log('❌ 保存する計算結果がありません');
+                return;
+            }
+            
+            try {
+                const calculationData = {
+                    result: display.value,
+                    note: note.value || '',
+                    timestamp: Date.now(),
+                    createdAt: new Date().toISOString(),
+                    date: new Date().toLocaleDateString('ja-JP'),
+                    time: new Date().toLocaleTimeString('ja-JP')
+                };
+                
+                log('🧮 計算結果を保存中...');
+                const calculationsRef = database.ref(`users/${currentUser.uid}/calculations`);
+                const newRef = calculationsRef.push();
+                await newRef.set(calculationData);
+                
+                log(`✅ 計算結果を保存しました: ${display.value}`);
+                note.value = '';
+            } catch (error) {
+                log(`❌ 保存エラー: ${error.message}`);
+            }
+        };
+
+        log('🚀 電卓アプリ v0.1 起動完了');
         log('🔐 認証システム準備完了');
         
         // プロトコルチェック（自動診断）
